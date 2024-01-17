@@ -10,7 +10,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Scripts -->
-        @vite(['resources/css/backend/app.css', 'resources/js/backend/app.js'])
+        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
         @stack('styles')
 
