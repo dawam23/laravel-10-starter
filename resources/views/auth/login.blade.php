@@ -1,47 +1,58 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.guest')
 
-    <form method="POST" action="{{ route('login') }}">
+@section('content')
+<div class="container container-tight py-4">
+    <div class="text-center mb-4">
+        <a href="." class="navbar-brand navbar-brand-autodark">
+            <img src="{{ asset('logo.svg') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+        </a>
+    </div>
+    <form class="card card-md" action="{{ route('login') }}" method="post" autocomplete="off">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">{{ __('Login to your account') }}</h2>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <div class="mb-3">
+                <label class="form-label">{{ __('Email address') }}</label>
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Enter email') }}" required autofocus tabindex="1">
+                @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ __('Password') }}
+                    @if (Route::has('password.request'))
+                    <span class="form-label-description">
+                        <a href="{{ route('password.request') }}" tabindex="5">{{ __('Forgot Password?') }}</a>
+                    </span>
+                    @endif
+                </label>
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('Password') }}" required tabindex="2">
+                @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div>
+                <label class="form-check">
+                    <input type="checkbox" class="form-check-input" tabindex="3" name="remember" />
+                    <span class="form-check-label">{{ __('Remember me on this device') }}</span>
+                </label>
+            </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary w-100" tabindex="4">{{ __('Sign in') }}</button>
+            </div>
         </div>
     </form>
-</x-guest-layout>
+
+    @if (Route::has('register'))
+    <div class="text-center text-muted mt-3">
+        {{ __("Don't have account yet?") }} <a href="{{ route('register') }}" tabindex="-1">{{ __('Sign up') }}</a>
+    </div>
+    @endif
+</div>
+@endsection

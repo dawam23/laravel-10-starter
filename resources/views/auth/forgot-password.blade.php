@@ -1,25 +1,48 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.guest')
+
+@section('content')
+
+<div class="container container-tight py-4">
+    <div class="text-center mb-4">
+        <a href="." class="navbar-brand navbar-brand-autodark">
+            <img src="{{ asset('logo.svg') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+        </a>
     </div>
+    @if (session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+    @endif
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
+    <form class="card card-md" action="{{ route('password.email') }}" method="POST" autocomplete="off">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">{{ __('Forgot password') }}</h2>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
+            <p class="text-muted mb-4">{{ __('Enter your email address and your password will be reset and emailed to you.') }}</p>
+
+            <div class="mb-3">
+                <label class="form-label">{{ __('Email address') }}</label>
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control form-control-user @error('email') is-invalid @enderror" placeholder="{{ __('Enter Email Address...') }}">
+                @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary w-100">
+                    {{ __('Reset My Password') }}
+                </button>
+            </div>
         </div>
     </form>
-</x-guest-layout>
+
+    @if (Route::has('login'))
+    <div class="text-center text-muted mt-3">
+        {{ __('Already have account?') }} <a href="{{ route('login') }}" tabindex="-1">{{ __('Sign in') }}</a>
+    </div>
+    @endif
+</div>
+
+@endsection

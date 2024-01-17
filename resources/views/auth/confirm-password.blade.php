@@ -1,27 +1,39 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-    </div>
+@extends('layouts.guest')
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+@section('content')
+<div class="container container-tight py-4">
+    <div class="text-center mb-4">
+        <a href="." class="navbar-brand navbar-brand-autodark">
+            <img src="{{ asset('logo.svg') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+        </a>
+    </div>
+    <form class="card card-md" action="{{ route('password.confirm') }}" method="post" autocomplete="off">
         @csrf
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">{{ __('Confirm Password') }}</h2>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <p class="text-muted mb-4">{{ __('Please confirm your password before continuing.') }}</p>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ __('Password') }}
+                    @if (Route::has('password.request'))
+                    <span class="form-label-description">
+                        <a href="{{ route('password.request') }}">{{ __('Forgot Password?') }}</a>
+                    </span>
+                    @endif
+                </label>
+                <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror" placeholder="{{ __('Enter Password') }}">
+                @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary w-100">{{ __('Confirm Password') }}</button>
+            </div>
         </div>
     </form>
-</x-guest-layout>
+</div>
+@endsection
