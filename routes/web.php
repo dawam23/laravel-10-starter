@@ -28,14 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('users', UsersController::class);
+    Route::get('/user/{user}/delete-avatar', [UsersController::class, 'deleteAvatar'])->name('users.delete-avatar');
 });
 
 require __DIR__.'/auth.php';
 
-
-// Route::view('/users', 'users.index', ['total' => 6, 'users' => App\Models\User::orderBy('name')->paginate(12), 'search' => null])->name('users.index');
-// Route::view('/users/create', 'users.create', ['total' => 6])->name('users.create');
-// Route::view('/users/edit', 'users.edit', ['total' => 6])->name('users.edit');
-// Route::view('/users/delete', 'users.delete', ['total' => 6])->name('users.delete');
-
-Route::resource('users', UsersController::class);

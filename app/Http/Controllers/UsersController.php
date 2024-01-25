@@ -5,39 +5,20 @@ namespace App\Http\Controllers;
 use App\Actions\UserAvatar;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search', null);
+        $users = User::orderBy('name')->get();
 
-        if (! empty($search)) {
-            $this->validateSearch($request->all());
-        }
-
-        $users = new User();
-
-        if (! is_null($search)) {
-            $users = $users->where( function ($query) use ($search) {
-                $query->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('email', 'like', '%'.$search.'%');
-            });
-        }
-
-        $total = $users->count();
-
-        $users = $users->orderBy('name')
-            ->paginate(12)
-            ->withQueryString();
-
-        return view('users.index', compact(
-            'users', 'search', 'total',
-        ));
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -45,7 +26,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -53,7 +34,26 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|string|max:255|unique:users,email',
+            'password' => ['required', 'string', Password::default(), 'confirmed'],
+        ]);
+
+        $input = $request->all();
+        if (isset($input['avatar'])) {
+            $input['avatar'] = (new UserAvatar)->upload($input['avatar']);
+        }
+
+        $user = User::create([
+            'avatar' => $input['avatar'] ?? null,
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+        ]);
+
+        return redirect()->route('users.index')
+            ->with('success', 'User created successfully.');
     }
 
     /**
@@ -69,7 +69,8 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -77,7 +78,26 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'confirmed',
+        ]);
+
+        $input = $request->all();
+
+        if(!empty($input['password'])) {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            $input = Arr::except($input, array('password'));
+        }
+
+        $user = User::find($id);
+        $user->update($input);
+
+        return redirect()->route('users.index')
+            ->with('success', 'User updated successfully.');
+
     }
 
     /**
@@ -94,16 +114,26 @@ class UsersController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('status', __('User deleted!'));
+            ->with('success', __('User deleted!'));
     }
 
-    private function validateSearch($input)
+    /**
+     * Delete a user
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteAvatar(User $user)
     {
-        Validator::make($input, [
-            'search' => [
-                'string',
-                'min:3'
-            ],
-        ])->validate();
+        if (! empty($user->avatar)) {
+            (new UserAvatar)->delete($user);
+        }
+
+        $user->avatar = null;
+        $user->save();
+
+        return redirect()
+            ->back()
+            ->with('status', __('Profile picture deleted!'));
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Actions;
 
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Facades\Image;
 
 class UserAvatar
 {

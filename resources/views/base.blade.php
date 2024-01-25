@@ -3,7 +3,6 @@
     </x-slot>
 
     {{--  Page header  --}}
-
     <x-slot name="pretitle">
         {{ __('Howdy, mate!') }}
     </x-slot>
@@ -29,18 +28,20 @@
     </x-slot>
 
     {{--  Page content  --}}
-
     <div class="container-xl">
-        <div class="alert alert-success">
-            <div class="alert-title">
-                {{ __('Welcome') }} {{ auth()->user()->name ?? null }}
-            </div>
-            <div class="text-muted">
-                {{ __('You are logged in!') }}
+        <x-alerts.alerts />
+        <div class="row row-cards">
+            <div class="col-lg-8">
+                <div class="card">
+                </div>
             </div>
         </div>
     </div>
 
     <x-slot name="scripts">
+        <script>
+            $('#navUsers').addClass('active')
+            $('#liBlank').addClass('active')
+        </script>
     </x-slot>
 </x-layouts.app>

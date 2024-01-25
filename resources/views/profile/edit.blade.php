@@ -114,3 +114,9 @@
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $("#liProfile").addClass("active");
+    </script>
+@endpush
