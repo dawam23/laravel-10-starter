@@ -9,92 +9,52 @@
                             {{ __('User Information') }}
                         </div>
                         <div class="card-body">
-                            <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Profile Picture') }}</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-3 col-form-label">{{ __('Profile Picture') }}</label>
                                 <div class="col-md-7">
-                                    <input
-                                        type="file"
-                                        name="avatar"
-                                        class="form-control @error('avatar') is-invalid @enderror"
-                                        accept=".png,.jpg,.jpeg,.gif,.webp">
-
+                                    <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror" accept=".png,.jpg,.jpeg,.gif,.webp">
                                     @error('avatar')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div><!-- /.form-group -->
+                            </div>
 
-                            <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Name') }}</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-3 col-form-label required">{{ __('Name') }}</label>
                                 <div class="col-md-7">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name') }}"
-                                        required
-                                        autofocus>
-
+                                    <input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('Enter name') }}" class="form-control @error('name') is-invalid @enderror" required autofocus>
                                     @error('name')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div><!-- /.form-group -->
+                            </div>
 
-                            <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Email') }}</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-3 col-form-label required">{{ __('Email') }}</label>
                                 <div class="col-md-7">
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ old('email') }}"
-                                        required>
-
-                                    @error('email')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                    <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Enter email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus>
+                                    @error('eamil')
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div><!-- /.form-group -->
+                            </div>
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Password') }}</label>
-                                <div class="col-md-3">
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        class="form-control @error('password') is-invalid @enderror"
-                                        required
-                                    >
-
+                                <label class="col-md-3 col-form-label required">{{ __('Password') }}</label>
+                                <div class="col-lg-3 col-md-7">
+                                    <input type="password" name="password" placeholder="{{ __('Enter password') }}" class="form-control @error('password') is-invalid @enderror" required>
                                     @error('password')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Confirm Password') }}</label>
-                                <div class="col-md-3">
-                                    <input
-                                        type="password"
-                                        name="password_confirmation"
-                                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        required
-                                    >
-
+                                <label class="col-md-3 col-form-label required">{{ __('Confirm Password') }}</label>
+                                <div class="col-lg-3 col-md-7">
+                                    <input type="password" name="password_confirmation" placeholder="{{ __('Enter password confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror" required >
                                     @error('password_confirmation')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback"></div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->

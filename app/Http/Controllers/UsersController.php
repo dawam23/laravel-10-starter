@@ -45,7 +45,7 @@ class UsersController extends Controller
             $input['avatar'] = (new UserAvatar)->upload($input['avatar']);
         }
 
-        $user = User::create([
+        User::create([
             'avatar' => $input['avatar'] ?? null,
             'name' => $input['name'],
             'email' => $input['email'],
@@ -84,6 +84,7 @@ class UsersController extends Controller
             'password' => 'confirmed',
         ]);
 
+        $user = User::findorFail($id);
         $input = $request->all();
 
         if(!empty($input['password'])) {
@@ -92,12 +93,17 @@ class UsersController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
-        $user = User::find($id);
+        if (isset($input['avatar'])) {
+            if (! empty($user->avatar)) {
+                (new UserAvatar)->delete($user);
+            }
+            $input['avatar'] = (new UserAvatar)->upload($input['avatar']);
+        }
+
         $user->update($input);
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully.');
-
     }
 
     /**

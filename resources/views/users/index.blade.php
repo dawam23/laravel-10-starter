@@ -33,18 +33,21 @@
                         <table class="table card-table table-vcenter text-nowrap datatable py-4" id="usersTable">
                             <thead>
                                 <tr>
+                                    <th class="no-sort w-1"></th>
                                     <th>{{ __('Name') }}</th>
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Role') }}</th>
-                                    <th class="w-1"></th>
+                                    <th class="no-sort w-1"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>
+                                            <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">{{ $user->getInitialsAvatar() }}</span>
+                                        </td>
+                                        <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">{{ $user->getInitialsAvatar() }}</span>
                                                 <div class="flex-fill">
                                                     <div class="font-weight-medium">{{ $user->name }}</div>
                                                     <div class="text-muted"><a href="#" class="text-reset">{{ $user->email }}</a></div>
@@ -63,11 +66,11 @@
                                                 <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="{{ route('users.edit', $user) }}">
-                                                        Edit
+                                                        {{ __('Edit') }}
                                                     </a>
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $user->id }}">
-                                                        Delete
-                                                    </a>
+                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', $user->id) }}"data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                        {{ __('Delete') }}
+                                                    </button>
                                                 </div>
                                             </span>
                                         </td>
@@ -81,28 +84,44 @@
         </div>
     </div>
 
-    @foreach ($users as $user)
-        <form action="{{ route('users.destroy', $user->id) }}" method="post" id="modal-delete-{{ $user->id }}" class="modal modal-blur fade" tabindex="-1" role="dialog" aria-hidden="true">
-            @csrf
-            @method('DELETE')
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    {{--  delete user modal  --}}
+    <div class="modal modal-blur fade" id="delete-user" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <form action="" method="POST">
+                @csrf
+                @method('DELETE')
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-title">{{ __('Attantion') }}</div>
-                        <div>
-                                {{ __('Are you sure you want to delete ') }}
-                                <span class="text text-success">{{ $user->name }}</span>
-                                {{ __(' from database?')}}
-                        </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-status bg-danger"></div>
+                    <div class="modal-body text-center py-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 9v2m0 4v.01" />
+                            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                        </svg>
+                        <h3>{{ _('Are you sure?') }}</h3>
+                        <div class="text-secondary">{{ __("Do you really want to delete this user? What you've done cannot be undone.") }}</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Yes, delete this user') }}</button>
+                        <div class="w-100">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn w-100" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                        Delete user
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    @endforeach
+            </form>
+        </div>
+    </div>
 
     <x-slot name="scripts">
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -112,7 +131,14 @@
             $('#liBlank').addClass('active')
 
             $('#usersTable').dataTable( {
-                //option
+                    // set index of column for default ordering
+                    order: [[1, 'asc']],
+
+                    //defind class for non-sortable column
+                    "columnDefs": [ {
+                        "targets": 'no-sort',
+                        "orderable": false,
+                        }],
                 } );
 
             $('div.dataTables_length').addClass('ps-4');
@@ -120,6 +146,14 @@
             $('div.dataTables_info').addClass('ps-4');
             $('#usersTable_paginate').addClass('pe-4');
 
+        </script>
+        <script>
+            $('#delete-user').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var action = button.data('action');
+                var modal = $(this);
+                modal.find('form').attr('action', action);
+            });
         </script>
     </x-slot>
 </x-layouts.app>

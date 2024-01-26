@@ -17,16 +17,14 @@
         </div>
         <div class="col-12 col-lg-auto mt-3 mt-lg-0">
             <ul class="list-inline list-inline-dots mb-0">
-            <li class="list-inline-item">
-                Copyright &copy; {{ date('Y') }}
-                <a href="{{ config('app.url') }}" class="link-secondary">{{config('app.name')}}</a>.
-                All rights reserved.
-            </li>
-            <li class="list-inline-item">
-                <a href="./changelog.html" class="link-secondary" rel="noopener">
-                    {{config('app.version')}}
-                </a>
-            </li>
+                <li class="list-inline-item">
+                    Copyright &copy; {{ date('Y') }}
+                    <a href="{{ config('app.url') }}" class="link-secondary">{{config('app.name')}}</a>.
+                    All rights reserved.
+                    <a href="#" class="link-secondary" rel="noopener">
+                        {{config('app.version')}}
+                    </a>
+                </li>
             </ul>
         </div>
         </div>

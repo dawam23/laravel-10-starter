@@ -11,19 +11,12 @@
                             {{ __('User Information') }}
                         </div>
                         <div class="card-body">
-                            <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Profile Picture') }}</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-3 col-form-label">{{ __('Profile Picture') }}</label>
                                 <div class="col-md-7">
-                                    <input
-                                        type="file"
-                                        name="avatar"
-                                        class="form-control @error('avatar') is-invalid @enderror"
-                                        accept=".png,.jpg,.jpeg,.gif,.webp">
-
+                                    <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror" accept=".png,.jpg,.jpeg,.gif,.webp">
                                     @error('avatar')
-                                        <div class="small text-danger">
-                                            {{ $message }}
-                                        </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 @if (! empty($user->avatar))
@@ -33,10 +26,7 @@
                                                 {{ __('Uploading new picture will delete the old one automatically.') }}
                                             </em>
                                         </div>
-                                        <img
-                                            src="{{ (new App\Actions\UserAvatar)->get($user) }}"
-                                            class="img-fluid w-50 mt-2">
-
+                                        <span class="avatar avatar-xl" style="background-image: url({{ (new App\Actions\UserAvatar)->get($user) }})"></span>
                                         <div class="text-danger mt-1">
                                             <a
                                                 href="{{ route('users.delete-avatar', $user) }}"
