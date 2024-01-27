@@ -14,6 +14,8 @@
         <!-- Scripts -->
         @vite('resources/sass/app.scss')
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+
         {{ $styles ?? '' }}
 
         <style>
@@ -53,7 +55,21 @@
         </div>
         <!-- Libs JS -->
         <script src="{{ asset('build/assets/app.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+        {{--  Jquery  --}}
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
         {{ $scripts ?? '' }}
+        @include('layouts.config.toastrjs')
+
+        {{--  datatables custom css  --}}
+        <script>
+            $('div.dataTables_length').addClass('ps-4');
+            $('#usersTable_filter').addClass('pe-4');
+            $('div.dataTables_info').addClass('ps-4');
+            $('#usersTable_paginate').addClass('pe-4');
+        </script>
     </body>
 </html>

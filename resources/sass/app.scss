@@ -1,1 +1,6 @@
-@import '@tabler/core/src/scss/tabler.scss';
+// @import '@tabler/core/src/scss/tabler.scss';
+
+@import "@tabler/core/dist/css/tabler.min.css";
+@import "@tabler/core/dist/css/tabler-flags.min.css";
+@import "@tabler/core/dist/css/tabler-payments.min.css";
+@import "@tabler/core/dist/css/tabler-vendors.min.css";

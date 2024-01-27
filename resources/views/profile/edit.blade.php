@@ -1,5 +1,3 @@
-@extends('layouts.app')
-
 @section('content')
     <div class="container-xl">
         <!-- Page title -->
@@ -120,3 +118,34 @@
         $("#liProfile").addClass("active");
     </script>
 @endpush
+
+<x-layouts.app>
+    <x-slot name="styles">
+    </x-slot>
+
+    {{--  Page header  --}}
+    <x-slot name="title">
+        {{ __('Profile') }}
+    </x-slot>
+
+    {{--  Page content  --}}
+    <div class="container-xl">
+        <x-alerts.alerts />
+        <div class="row row-cards">
+            <div class="col-lg-8">
+                @include('profile.partials.update-profile-information-form')
+
+                @include('profile.partials.update-password-form')
+
+                @include('profile.partials.delete-user-form')
+            </div>
+        </div>
+    </div>
+
+    <x-slot name="scripts">
+        <script>
+            $('#navUsers').addClass('active')
+            $('#liBlank').addClass('active')
+        </script>
+    </x-slot>
+</x-layouts.app>

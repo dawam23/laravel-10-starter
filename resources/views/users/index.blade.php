@@ -22,7 +22,6 @@
 
     {{--  Page content  --}}
     <div class="container-xl">
-        <x-alerts.alerts />
         <div class="row row-cards">
             <div class="col-12">
                 <div class="card">
@@ -30,7 +29,7 @@
                         <h3 class="card-title">{{ __('Users List') }}</h3>
                     </div>
                     <div class="table-responsive py-4">
-                        <table class="table card-table table-vcenter text-nowrap datatable py-4" id="usersTable">
+                        <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4" id="usersTable">
                             <thead>
                                 <tr>
                                     <th class="no-sort w-1"></th>
@@ -65,10 +64,10 @@
                                             <span class="dropdown">
                                                 <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('users.edit', $user) }}">
+                                                    <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
                                                         {{ __('Edit') }}
                                                     </a>
-                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', $user->id) }}"data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
                                                         {{ __('Delete') }}
                                                     </button>
                                                 </div>
@@ -100,7 +99,15 @@
                             <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
                         </svg>
                         <h3>{{ _('Are you sure?') }}</h3>
-                        <div class="text-secondary">{{ __("Do you really want to delete this user? What you've done cannot be undone.") }}</div>
+                        <div>
+                            <span class="text-secondary">
+                                {{ __('Do you really want to delete user with name') }}
+                            </span>
+                            <span class="text-info" id="user-name"></span>
+                            <span class="text-secondary">
+                                {{ ("? What you've done cannot be undone.") }}
+                            </span>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="w-100">
@@ -140,19 +147,15 @@
                         "orderable": false,
                         }],
                 } );
-
-            $('div.dataTables_length').addClass('ps-4');
-            $('#usersTable_filter').addClass('pe-4');
-            $('div.dataTables_info').addClass('ps-4');
-            $('#usersTable_paginate').addClass('pe-4');
-
         </script>
         <script>
             $('#delete-user').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var action = button.data('action');
+                var name = button.data('name');
                 var modal = $(this);
                 modal.find('form').attr('action', action);
+                $('#user-name').text(name)
             });
         </script>
     </x-slot>

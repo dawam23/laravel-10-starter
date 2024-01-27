@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Actions\UserAvatar;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
-
 class UsersController extends Controller
 {
     /**
@@ -16,7 +17,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name')->get();
+        $users = User::orderBy('name')
+                    ->get();
 
         return view('users.index', compact('users'));
     }
@@ -32,15 +34,10 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|string|max:255|unique:users,email',
-            'password' => ['required', 'string', Password::default(), 'confirmed'],
-        ]);
-
         $input = $request->all();
+
         if (isset($input['avatar'])) {
             $input['avatar'] = (new UserAvatar)->upload($input['avatar']);
         }
@@ -52,8 +49,9 @@ class UsersController extends Controller
             'password' => Hash::make($input['password']),
         ]);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User created successfully.');
+        return redirect()
+            ->route('users.index')
+            ->with('message', __('User successfully created.'));
     }
 
     /**
@@ -69,23 +67,20 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $id     = Crypt::decrypt($id);
+        $user   = User::find($id);
+
         return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'confirmed',
-        ]);
-
-        $user = User::findorFail($id);
-        $input = $request->all();
+        $id     = Crypt::decrypt($id);
+        $user   = User::findorFail($id);
+        $input  = $request->all();
 
         if(!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
@@ -102,8 +97,9 @@ class UsersController extends Controller
 
         $user->update($input);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully.');
+        return redirect()
+            ->route('users.index')
+            ->with('message', __('User update successfully.'));
     }
 
     /**
@@ -111,7 +107,9 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
+        $id     = Crypt::decrypt($id);
         $user = User::findOrFail($id);
+
         if (! empty($user->avatar)) {
             (new UserAvatar)->delete($user);
         }
@@ -120,7 +118,7 @@ class UsersController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', __('User deleted!'));
+            ->with('message', __('User has been successfully deleted.'));
     }
 
     /**
@@ -140,6 +138,6 @@ class UsersController extends Controller
 
         return redirect()
             ->back()
-            ->with('status', __('Profile picture deleted!'));
+            ->with('message', __('Profile picture deleted!'));
     }
 }
