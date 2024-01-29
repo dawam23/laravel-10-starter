@@ -1,4 +1,5 @@
 <x-layouts.app>
+
     <x-slot name="styles">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     </x-slot>
@@ -135,9 +136,12 @@
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $('#navUsers').addClass('active')
+            $('#liBlank').addClass('active')
+
             $('#usersTable').dataTable( {
-                    // set index of column to set default ordering
+                    // set index of column for default ordering
                     order: [[1, 'asc']],
+
                     //defind class for non-sortable column
                     "columnDefs": [ {
                         "targets": 'no-sort',

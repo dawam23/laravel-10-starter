@@ -144,7 +144,8 @@
 
     <x-slot name="scripts">
         <script>
-            $("#liProfile").addClass("active");
+            $('#navUsers').addClass('active')
+            $('#liBlank').addClass('active')
         </script>
     </x-slot>
 </x-layouts.app>

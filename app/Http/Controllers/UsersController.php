@@ -51,7 +51,7 @@ class UsersController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('message', __('New user added successfully.'));
+            ->with('message', __('User successfully created.'));
     }
 
     /**
@@ -138,6 +138,6 @@ class UsersController extends Controller
 
         return redirect()
             ->back()
-            ->with('message', __('Avatar has been successfully deleted.'));
+            ->with('message', __('Profile picture deleted!'));
     }
 }

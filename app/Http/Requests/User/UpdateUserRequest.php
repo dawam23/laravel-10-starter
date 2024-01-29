@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\User;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 
@@ -25,19 +23,11 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = Route::input('user');
-        $user = Crypt::decrypt($id);
+        $user = Route::input('user');
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$user,
             'password' => 'confirmed',
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        if ($validator->fails()) {
-            session()->flash('error', __('Whoops, Something Went Wrong'));
-        }
     }
 }

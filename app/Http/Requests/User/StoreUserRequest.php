@@ -28,11 +28,4 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'string', Password::default(), 'confirmed'],
         ];
     }
-
-    public function withValidator($validator)
-    {
-        if ($validator->fails()) {
-            session()->flash('error', __('Whoops, Something Went Wrong'));
-        }
-    }
 }

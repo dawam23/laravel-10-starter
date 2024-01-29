@@ -1,8 +1,9 @@
 <x-layouts.app>
     <div class="container-xl">
         <div class="row">
+            <x-alerts.alerts />
             <div class="col">
-                <form action="{{ route('users.update', Crypt::encrypt($user->id)) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('users.update', $user) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="card">
