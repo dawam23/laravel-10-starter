@@ -5,15 +5,15 @@
 
     {{--  Page header  --}}
     <x-slot name="title">
-        {{ __('Users') }}
+        {{ __('Roles') }}
     </x-slot>
 
     <x-slot name="actions">
         <div class="col-auto ms-auto d-print-none">
             <div class="btn-list">
-                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <a href="{{ route('roles.create') }}" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    {{ __('New user') }}
+                    {{ __('New role') }}
                 </a>
             </div>
         </div>
@@ -25,10 +25,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('Users List') }}</h3>
+                        <h3 class="card-title">{{ __('Roles List') }}</h3>
                     </div>
                     <div class="table-responsive py-4">
-                        <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4" id="usersTable">
+                        <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4" id="rolesTable">
                             <thead>
                                 <tr>
                                     <th class="no-sort w-1"></th>
@@ -39,16 +39,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($roles as $role)
                                     <tr>
                                         <td>
-                                            <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">{{ $user->getInitialsAvatar() }}</span>
+                                            <span class="avatar me-2">{{ $loop->iteration }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
                                                 <div class="flex-fill">
-                                                    <div class="font-weight-medium">{{ $user->name }}</div>
-                                                    <div class="text-muted"><a href="#" class="text-reset">{{ $user->email }}</a></div>
+                                                    <div class="font-weight-medium">{{ Str::title($role->name) }}</div>
+                                                    {{--  <div class="text-muted"><a href="#" class="text-reset">{{ $role->email }}</a></div>  --}}
                                                 </div>
                                             </div>
                                         </td>
@@ -57,18 +57,16 @@
                                             <div class="text-muted">Lorem.</div>
                                         </td>
                                         <td class="text-muted" >
-                                            @foreach ($user->roles->pluck('name') as $roles)
-                                                <span class="badge badge-outline text-success">{{ Str::title($roles) }}</span>
-                                            @endforeach
+                                            <span class="badge badge-outline text-success">{{ Str::title($role->guard_name) }}</span>
                                         </td>
                                         <td class="text-end">
                                             <span class="dropdown">
                                                 <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
+                                                    <a class="dropdown-item" href="{{ route('roles.edit', Crypt::encrypt($role->id)) }}">
                                                         {{ __('Edit') }}
                                                     </a>
-                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                    <button type="button" class="dropdown-item" data-action="{{ route('roles.destroy', Crypt::encrypt($role->id)) }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#delete-role" >
                                                         {{ __('Delete') }}
                                                     </button>
                                                 </div>
@@ -84,8 +82,8 @@
         </div>
     </div>
 
-    {{--  delete user modal  --}}
-    <div class="modal modal-blur fade" id="delete-user" tabindex="-1">
+    {{--  delete role modal  --}}
+    <div class="modal modal-blur fade" id="delete-role" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <form action="" method="POST">
                 @csrf
@@ -102,9 +100,9 @@
                         <h3>{{ _('Are you sure?') }}</h3>
                         <div>
                             <span class="text-secondary">
-                                {{ __('Do you really want to delete user with name') }}
+                                {{ __('Do you really want to delete role with name') }}
                             </span>
-                            <span class="text-info" id="user-name"></span>
+                            <span class="text-info" id="role-name"></span>
                             <span class="text-secondary">
                                 {{ ("? What you've done cannot be undone.") }}
                             </span>
@@ -120,7 +118,7 @@
                                 </div>
                                 <div class="col">
                                     <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                        Delete user
+                                        Delete role
                                     </button>
                                 </div>
                             </div>
@@ -135,8 +133,8 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
         <script>
-            $('#navUsers').addClass('active')
-            $('#usersTable').dataTable( {
+            $('#navRoles').addClass('active')
+            $('#rolesTable').dataTable( {
                     // set index of column to set default ordering
                     order: [[1, 'asc']],
                     //defind class for non-sortable column
@@ -147,13 +145,13 @@
                 } );
         </script>
         <script>
-            $('#delete-user').on('show.bs.modal', function (event) {
+            $('#delete-role').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var action = button.data('action');
                 var name = button.data('name');
                 var modal = $(this);
                 modal.find('form').attr('action', action);
-                $('#user-name').text(name)
+                $('#role-name').text(name)
             });
         </script>
     </x-slot>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UsersController::class);
     Route::get('/user/{user}/delete-avatar', [UsersController::class, 'deleteAvatar'])->name('users.delete-avatar');
+
+    Route::resource('roles', RolesController::class);
 });
 
 require __DIR__.'/auth.php';
