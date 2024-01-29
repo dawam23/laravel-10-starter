@@ -59,6 +59,7 @@
                                         <td class="text-muted" >
                                             @foreach ($user->roles->pluck('name') as $roles)
                                                 <span class="badge badge-outline text-success">{{ $roles }}</span>
+                                                {{ $roles }}
                                             @endforeach
                                         </td>
                                         <td class="text-end">
