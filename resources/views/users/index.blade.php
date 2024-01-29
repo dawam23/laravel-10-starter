@@ -54,13 +54,11 @@
                                         </td>
                                         <td >
                                             <div>Lorem, ipsum dolor.</div>
-                                            <div class="text-muted">Lorem.</div>
+                                            <di
+                                            v class="text-muted">Lorem.</di>
                                         </td>
                                         <td class="text-muted" >
-                                            @foreach ($user->roles->pluck('name') as $roles)
-                                                <span class="badge badge-outline text-success">{{ $roles }}</span>
-                                                {{ $roles }}
-                                            @endforeach
+                                            <span class="badge badge-outline text-success">{{ __('User') }}</span>
                                         </td>
                                         <td class="text-end">
                                             <span class="dropdown">
