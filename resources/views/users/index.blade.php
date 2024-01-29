@@ -57,7 +57,9 @@
                                             <div class="text-muted">Lorem.</div>
                                         </td>
                                         <td class="text-muted" >
-                                            {{ Str::random(3) }}
+                                            @foreach ($user->roles->pluck('name') as $roles)
+                                                <span class="badge badge-outline text-success">{{ $roles }}</span>
+                                            @endforeach
                                         </td>
                                         <td class="text-end">
                                             <span class="dropdown">
