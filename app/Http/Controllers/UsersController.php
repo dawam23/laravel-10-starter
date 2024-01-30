@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+
 class UsersController extends Controller
 {
         /**
@@ -41,7 +43,12 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $rolesList = Role::all()
+                        ->sortBy('name')
+                        ->pluck('name', 'name')
+                        ->merge(['' => 'Select role']);
+
+        return view('users.create', compact('rolesList'));
     }
 
     /**
@@ -55,12 +62,14 @@ class UsersController extends Controller
             $input['avatar'] = (new UserAvatar)->upload($input['avatar']);
         }
 
-        User::create([
+        $user = User::create([
             'avatar' => $input['avatar'] ?? null,
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $user->assignRole($input['role']);
 
         return redirect()
             ->route('users.index')
@@ -82,8 +91,10 @@ class UsersController extends Controller
     {
         $id     = Crypt::decrypt($id);
         $user   = User::find($id);
+        $roles = Role::orderBy('name')
+                    ->get();
 
-        return view('users.edit', compact('user'));
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**

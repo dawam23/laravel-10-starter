@@ -1,6 +1,13 @@
 // @import '@tabler/core/src/scss/tabler.scss';
+// @import '@tabler/core/src/scss/tabler-flags.scss';
+// @import '@tabler/core/src/scss/tabler-payments.scss';
+// @import '@tabler/core/src/scss/tabler-vendors.scss';
+// @import '@tabler/core/src/scss/tabler-social.scss';
+// @import '@tabler/core/src/scss/demo.scss';
 
+@import "@tabler/core/dist/css/demo.min.css";
 @import "@tabler/core/dist/css/tabler.min.css";
 @import "@tabler/core/dist/css/tabler-flags.min.css";
 @import "@tabler/core/dist/css/tabler-payments.min.css";
-@import "@tabler/core/dist/css/tabler-vendors.min.css";
+// @import "@tabler/core/dist/css/tabler-vendors.min.css";
+@import "../tabler/dist/css/tabler-vendors.min.css";

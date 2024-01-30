@@ -74,23 +74,20 @@
                                 </div>
                             </div><!-- /.form-group -->
 
-                            {{--  <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Username') }}</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-3 col-form-label required">{{ __('Role') }}</label>
                                 <div class="col-md-7">
-                                    <input
-                                        type="text"
-                                        name="username"
-                                        class="form-control @error('username') is-invalid @enderror"
-                                        value="{{ old('username', $user->username) }}"
-                                        required>
-
-                                    @error('username')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                    <select type="text" class="form-select" name="roles" id="select-roles">
+                                        <option value="">{{ __('Select role') }}</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}" {{ old('roles') == $user->getRoleNames() ? 'selected' : '' }}>{{ Str::title($role->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('roles')
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div><!-- /.form-group -->  --}}
+                            </div>
 
                             <div class="form-group row mb-3">
                                 <label class="col-form-label col-md-3">{{ __('Password') }}</label>

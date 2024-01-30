@@ -68,9 +68,9 @@
                                                     <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
                                                         {{ __('Edit') }}
                                                     </a>
-                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                    <a class="dropdown-item" href="#" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
                                                         {{ __('Delete') }}
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </span>
                                         </td>
@@ -148,9 +148,9 @@
         </script>
         <script>
             $('#delete-user').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var action = button.data('action');
-                var name = button.data('name');
+                var a = $(event.relatedTarget);
+                var action = a.data('action');
+                var name = a.data('name');
                 var modal = $(this);
                 modal.find('form').attr('action', action);
                 $('#user-name').text(name)
