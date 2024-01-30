@@ -91,10 +91,12 @@ class UsersController extends Controller
     {
         $id     = Crypt::decrypt($id);
         $user   = User::find($id);
-        $roles = Role::orderBy('name')
-                    ->get();
+        $rolesList = Role::all()
+                        ->sortBy('name')
+                        ->pluck('name', 'name')
+                        ->merge(['' => 'Select role']);
 
-        return view('users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user', 'rolesList'));
     }
 
     /**
@@ -120,6 +122,7 @@ class UsersController extends Controller
         }
 
         $user->update($input);
+        $user->syncRoles($request->input('role'));
 
         return redirect()
             ->route('users.index')

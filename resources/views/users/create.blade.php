@@ -16,7 +16,7 @@
                                 <div class="col-md-7">
 
                                     {!! Form::file('avatar', [
-                                        'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
+                                        'class' => 'form-control' . ( $errors->has('avatar') ? ' is-invalid' : '' ),
                                         'accept' => '.png,.jpg,.jpeg,.gif,.webp'
                                     ]) !!}
 
@@ -33,7 +33,9 @@
                                     {!! Form::text('name', old('name'), [
                                         'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
                                         'placeholder' => __('Full name'),
-                                        'required']) !!}
+                                        'required',
+                                        'autofocus'
+                                    ]) !!}
 
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -42,14 +44,14 @@
                             </div>
 
                             <div class="mb-3 row">
-                                {!! Form::label('name', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
+                                {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
 
                                     {!! Form::email('email', old('email'), [
                                         'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
                                         'placeholder' => __('Email Address'),
                                         'required'
-                                        ]) !!}
+                                    ]) !!}
 
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -62,9 +64,9 @@
                                 <div class="col-md-7">
 
                                     {!! Form::select('role', $rolesList, old('role'), [
-                                                'class' => 'form-select'  . ( $errors->has('role') ? ' is-invalid' : '' ),
-                                                'id' => 'select-role'
-                                            ]) !!}
+                                        'class' => 'form-select'  . ( $errors->has('role') ? ' is-invalid' : '' ),
+                                        'id' => 'select-role'
+                                    ]) !!}
 
                                     @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>

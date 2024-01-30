@@ -11,9 +11,14 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ __('Profile Picture') }}</label>
+                                {!! Form::label('avatar', __('Profile Picture'), ['class' => 'col-md-3 col-form-label']) !!}
                                 <div class="col-md-7">
-                                    <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror" accept=".png,.jpg,.jpeg,.gif,.webp">
+
+                                    {!! Form::file('avatar', [
+                                        'class' => 'form-control' . ( $errors->has('avatar') ? ' is-invalid' : '' ),
+                                        'accept' => '.png,.jpg,.jpeg,.gif,.webp'
+                                    ]) !!}
+
                                     @error('avatar')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -38,87 +43,79 @@
                             </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Name') }}</label>
+                                {!! Form::label('name', __('Name'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name', $user->name) }}"
-                                        required
-                                        autofocus>
+
+                                    {!! Form::text('name', old('name', $user->name), [
+                                        'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Full name'),
+                                        'required',
+                                        'autofocus'
+                                    ]) !!}
 
                                     @error('name')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Email') }}</label>
+                                {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ old('email', $user->email) }}"
-                                        required>
+
+                                    {!! Form::email('email', old('email', $user->email), [
+                                        'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Email Address'),
+                                        'required'
+                                    ]) !!}
 
                                     @error('email')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->
 
                             <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label required">{{ __('Role') }}</label>
+                                {!! Form::label('role', __('Role'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
-                                    <select type="text" class="form-select" name="roles" id="select-roles">
-                                        <option value="">{{ __('Select role') }}</option>
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->name }}" {{ old('roles') == $user->getRoleNames() ? 'selected' : '' }}>{{ Str::title($role->name) }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('roles')
+
+                                    {!! Form::select('role', $rolesList, old('role', $user->getRoleNames()), [
+                                        'class' => 'form-select' . ( $errors->has('role') ? ' is-invalid' : '' ),
+                                        'id' => 'select-role'
+                                    ]) !!}
+
+                                    @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Password') }}</label>
+                                {!! Form::label('password', __('Password'), ['class' => 'col-md-3 col-form-label']) !!}
                                 <div class="col-md-3">
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        class="form-control @error('password') is-invalid @enderror"
-                                    >
+
+                                    {!! Form::password('password', [
+                                        'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('password'),
+                                    ]) !!}
 
                                     @error('password')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
-                                <label class="col-form-label col-md-3">{{ __('Confirm Password') }}</label>
+                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3 col-form-label']) !!}
                                 <div class="col-md-3">
-                                    <input
-                                        type="password"
-                                        name="password_confirmation"
-                                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    >
+
+                                    {!! Form::password('password_confirmation', [
+                                        'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Confirm password'),
+                                    ]) !!}
 
                                     @error('password_confirmation')
-                                    <div class="small text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div><!-- /.form-group -->
@@ -156,4 +153,38 @@
             </div>
         </div>
     </div>
+
+    <x-slot name="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+        <script>
+            $('#navUsers').addClass('active')
+        </script>
+        <script>
+            // @formatter:off
+            document.addEventListener("DOMContentLoaded", function () {
+                var el;
+                window.TomSelect && (new TomSelect(el = document.getElementById('select-role'), {
+                    copyClassesToDropdown: false,
+                    allowEmptyOption: false,
+                    dropdownParent: 'body',
+                    controlInput: '<input>',
+                    render:{
+                        item: function(data,escape) {
+                            if( data.customProperties ){
+                                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                            }
+                            return '<div>' + escape(data.text) + '</div>';
+                        },
+                        option: function(data,escape){
+                            if( data.customProperties ){
+                                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                            }
+                            return '<div>' + escape(data.text) + '</div>';
+                        },
+                    },
+                }));
+            });
+            // @formatter:on
+        </script>
+    </x-slot>
 </x-layouts.app>

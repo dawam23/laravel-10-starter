@@ -31,6 +31,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$user,
             'password' => 'confirmed',
+            'role' => 'required'
         ];
     }
 
