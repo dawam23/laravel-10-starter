@@ -23,11 +23,6 @@ class PermissionSeeder extends Seeder
             'update users',
             'delete users',
 
-            'create permissions',
-            'read permissions',
-            'update permissions',
-            'delete permissions',
-
             'create roles',
             'read roles',
             'update roles',

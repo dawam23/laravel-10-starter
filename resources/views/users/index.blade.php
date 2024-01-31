@@ -8,16 +8,18 @@
         {{ __('Users') }}
     </x-slot>
 
-    <x-slot name="actions">
-        <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-                <a href="{{ route('users.create') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    {{ __('New user') }}
-                </a>
+    @can('create users')
+        <x-slot name="actions">
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                        {{ __('New user') }}
+                    </a>
+                </div>
             </div>
-        </div>
-    </x-slot>
+        </x-slot>
+    @endcan
 
     {{--  Page content  --}}
     <div class="container-xl">
@@ -65,12 +67,16 @@
                                             <span class="dropdown">
                                                 <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
-                                                        {{ __('Edit') }}
-                                                    </a>
-                                                    <a class="dropdown-item" href="#" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
-                                                        {{ __('Delete') }}
-                                                    </a>
+                                                    @can('update users')
+                                                        <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
+                                                            {{ __('Edit') }}
+                                                        </a>
+                                                    @endcan
+                                                    @can('delete users')
+                                                        <a class="dropdown-item" href="#" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                            {{ __('Delete') }}
+                                                        </a>
+                                                    @endcan
                                                 </div>
                                             </span>
                                         </td>

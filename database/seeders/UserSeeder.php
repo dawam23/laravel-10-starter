@@ -33,12 +33,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
-        $superAdmin->assignRole('super admin');
-        $admin->assignRole('admin');
-        $user->assignRole('user');
+        $superAdmin->assignRole('Super Admin');
+        $admin->assignRole('Admin');
+        $user->assignRole('User');
 
         $userFactory = User::factory(20)->create();
-        $role = Role::findByName('user');
+        $role = Role::findByName('User');
         $role->users()->attach($userFactory);
     }
 }

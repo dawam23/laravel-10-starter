@@ -12,7 +12,7 @@ class RolesController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:create roles|read roles|update roles|delete roles|', ['only' => ['index']]);
+        $this->middleware('permission:create roles|read roles|update roles|delete roles', ['only' => ['index']]);
         $this->middleware('permission:create roles', ['only' => ['create','store']]);
         $this->middleware('permission:update roles', ['only' => ['edit','update']]);
         $this->middleware('permission:delete roles', ['only' => ['destroy']]);
@@ -34,9 +34,15 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
+        $usersPermissions = Permission::orderBy('name')
+                                ->where('name', 'like', '%users')
+                                ->get();
 
-        return view('roles.create', compact('permission'));
+        $rolesPermissions = Permission::orderBy('name')
+                                ->where('name', 'like', '%roles')
+                                ->get();
+
+        return view('roles.create', compact('usersPermissions', 'rolesPermissions'));
     }
 
     /**
@@ -53,7 +59,7 @@ class RolesController extends Controller
         $role->syncPermissions($request->input('permission'));
 
         return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully.');
+                    ->with('message', 'New role successfully created.');
     }
 
     /**
@@ -61,7 +67,7 @@ class RolesController extends Controller
      */
     public function show(string $id)
     {
-        $id     = Crypt::decrypt($id);
+        $id   = Crypt::decrypt($id);
         $role = Role::find($id);
         $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', 'permissions.id')
             ->where('role_has_permissions.role_id',$id)
@@ -75,15 +81,22 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
-        $id     = Crypt::decrypt($id);
+        $id = Crypt::decrypt($id);
         $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table('role_has_permissions')
-            ->where('role_has_permissions.role_id', $id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
+        $usersPermissions = Permission::orderBy('name')
+                                ->where('name', 'like', '%users')
+                                ->get();
 
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        $rolesPermissions = Permission::orderBy('name')
+                                ->where('name', 'like', '%roles')
+                                ->get();
+
+        $rolePermissions = DB::table('role_has_permissions')
+                            ->where('role_has_permissions.role_id', $id)
+                            ->pluck('role_has_permissions.permission_id')
+                            ->all();
+
+        return view('roles.edit', compact('role', 'usersPermissions', 'rolesPermissions', 'rolePermissions'));
     }
 
     /**
@@ -104,7 +117,7 @@ class RolesController extends Controller
         $role->syncPermissions($request->input('permission'));
 
         return redirect()->route('roles.index')
-            ->with('success', 'Role updated successfully.');
+            ->with('message', 'Role updated successfully.');
     }
 
     /**

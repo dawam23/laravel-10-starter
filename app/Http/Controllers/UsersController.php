@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:create users|read users|update users|delete users|', ['only' => ['index']]);
+        $this->middleware('permission:create users|read users|update users|delete users', ['only' => ['index']]);
         $this->middleware('permission:create users', ['only' => ['create','store']]);
         $this->middleware('permission:update users', ['only' => ['edit','update']]);
         $this->middleware('permission:delete users', ['only' => ['destroy']]);

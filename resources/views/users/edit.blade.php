@@ -79,7 +79,7 @@
                                 {!! Form::label('role', __('Role'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
 
-                                    {!! Form::select('role', $rolesList, old('role', $user->getRoleNames()), [
+                                    {!! Form::select('role', $rolesList, old('role', $user->getRoleNames() != '[]' ? $user->getRoleNames() : ''), [
                                         'class' => 'form-select' . ( $errors->has('role') ? ' is-invalid' : '' ),
                                         'id' => 'select-role'
                                     ]) !!}

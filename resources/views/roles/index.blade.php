@@ -8,16 +8,18 @@
         {{ __('Roles') }}
     </x-slot>
 
-    <x-slot name="actions">
-        <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-                <a href="{{ route('roles.create') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    {{ __('New role') }}
-                </a>
+    @can('create roles')
+        <x-slot name="actions">
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a href="{{ route('roles.create') }}" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                        {{ __('New role') }}
+                    </a>
+                </div>
             </div>
-        </div>
-    </x-slot>
+        </x-slot>
+    @endcan
 
     {{--  Page content  --}}
     <div class="container-xl">
@@ -33,8 +35,7 @@
                                 <tr>
                                     <th class="no-sort w-1"></th>
                                     <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Title') }}</th>
-                                    <th>{{ __('Role') }}</th>
+                                    <th>{{ __('Guard Name') }}</th>
                                     <th class="no-sort w-1"></th>
                                 </tr>
                             </thead>
@@ -48,29 +49,30 @@
                                             <div class="d-flex py-1 align-items-center">
                                                 <div class="flex-fill">
                                                     <div class="font-weight-medium">{{ Str::title($role->name) }}</div>
-                                                    {{--  <div class="text-muted"><a href="#" class="text-reset">{{ $role->email }}</a></div>  --}}
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td >
-                                            <div>Lorem, ipsum dolor.</div>
-                                            <div class="text-muted">Lorem.</div>
                                         </td>
                                         <td class="text-muted" >
                                             <span class="badge badge-outline text-success">{{ Str::title($role->guard_name) }}</span>
                                         </td>
                                         <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="{{ route('roles.edit', Crypt::encrypt($role->id)) }}">
-                                                        {{ __('Edit') }}
-                                                    </a>
-                                                    <button type="button" class="dropdown-item" data-action="{{ route('roles.destroy', Crypt::encrypt($role->id)) }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#delete-role" >
-                                                        {{ __('Delete') }}
-                                                    </button>
-                                                </div>
-                                            </span>
+                                            @if ($role->name != 'Super Admin')
+                                                <span class="dropdown">
+                                                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        @can('update roles')
+                                                            <a class="dropdown-item" href="{{ route('roles.edit', Crypt::encrypt($role->id)) }}">
+                                                                {{ __('Edit') }}
+                                                            </a>
+                                                        @endcan
+                                                        @can('delete roles')
+                                                            <button type="button" class="dropdown-item" data-action="{{ route('roles.destroy', Crypt::encrypt($role->id)) }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#delete-role" >
+                                                                {{ __('Delete') }}
+                                                            </button>
+                                                        @endcan
+                                                    </div>
+                                                </span>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

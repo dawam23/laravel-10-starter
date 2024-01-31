@@ -13,7 +13,7 @@
                             </span>
                         </a>
                     </li>
-                    @can('read users')
+                    @canany(['create users', 'read users', 'update users', 'delete users'])
                         <li class="nav-item" id="navUsers">
                             <a class="nav-link" href="{{ route('users.index') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -30,43 +30,30 @@
                                 </span>
                             </a>
                         </li>
-                    @endcan
-                    <li class="nav-item" id="navPermission">
-                        <a class="nav-link" href="{{ route('users.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-shield" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h2" />
-                                    <path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5z" />
-                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                {{ __('Permissions') }}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="navRoles">
-                        <a class="nav-link" href="{{ route('roles.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-cog" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h2.5" />
-                                    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M19.001 15.5v1.5" />
-                                    <path d="M19.001 21v1.5" />
-                                    <path d="M22.032 17.25l-1.299 .75" />
-                                    <path d="M17.27 20l-1.3 .75" />
-                                    <path d="M15.97 17.25l1.3 .75" />
-                                    <path d="M20.733 20l1.3 .75" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                {{ __('Roles') }}
-                            </span>
-                        </a>
-                    </li>
+                    @endcanany
+                    @canany(['create roles', 'read roles', 'update roles', 'delete roles'])
+                        <li class="nav-item" id="navRoles">
+                            <a class="nav-link" href="{{ route('roles.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-cog" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h2.5" />
+                                        <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M19.001 15.5v1.5" />
+                                        <path d="M19.001 21v1.5" />
+                                        <path d="M22.032 17.25l-1.299 .75" />
+                                        <path d="M17.27 20l-1.3 .75" />
+                                        <path d="M15.97 17.25l1.3 .75" />
+                                        <path d="M20.733 20l1.3 .75" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    {{ __('Roles') }}
+                                </span>
+                            </a>
+                        </li>
+                    @endcanany
                 </ul>
             </div>
         </div>
