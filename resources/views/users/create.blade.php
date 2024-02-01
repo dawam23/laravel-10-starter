@@ -10,9 +10,14 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label">{{ __('Profile Picture') }}</label>
+                                {!! Form::label('avatar', __('Profile Picture'), ['class' => 'col-md-3 col-form-label']) !!}
                                 <div class="col-md-7">
-                                    <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror" accept=".png,.jpg,.jpeg,.gif,.webp">
+
+                                    {!! Form::file('avatar', [
+                                        'class' => 'form-control' . ( $errors->has('avatar') ? ' is-invalid' : '' ),
+                                        'accept' => '.png,.jpg,.jpeg,.gif,.webp'
+                                    ]) !!}
+
                                     @error('avatar')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -20,9 +25,16 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label required">{{ __('Name') }}</label>
+                                {!! Form::label('name', __('Name'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
-                                    <input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('Enter name') }}" class="form-control @error('name') is-invalid @enderror" required autofocus>
+
+                                    {!! Form::text('name', old('name'), [
+                                        'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Full name'),
+                                        'required',
+                                        'autofocus'
+                                    ]) !!}
+
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -32,17 +44,30 @@
                             <div class="mb-3 row">
                                 <label class="col-md-3 col-form-label required">{{ __('Email') }}</label>
                                 <div class="col-md-7">
-                                    <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('Enter email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus>
-                                    @error('eamil')
+                                    {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
+
+                                    {!! Form::email('email', old('email'), [
+                                        'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Email Address'),
+                                        'required'
+                                    ]) !!}
+
+                                    @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label class="col-md-3 col-form-label required">{{ __('Password') }}</label>
+                                {!! Form::label('password', __('Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
-                                    <input type="password" name="password" placeholder="{{ __('Enter password') }}" class="form-control @error('password') is-invalid @enderror" required>
+
+                                    {!! Form::password('password', [
+                                        'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('New password'),
+                                        'required'
+                                    ]) !!}
+
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -50,9 +75,15 @@
                             </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
-                                <label class="col-md-3 col-form-label required">{{ __('Confirm Password') }}</label>
+                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
-                                    <input type="password" name="password_confirmation" placeholder="{{ __('Enter password confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror" required >
+
+                                    {!! Form::password('password_confirmation', [
+                                        'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Confirm password'),
+                                        'required'
+                                    ]) !!}
+
                                     @error('password_confirmation')
                                         <div class="invalid-feedback"></div>
                                     @enderror
@@ -92,4 +123,10 @@
             </div>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            $('#navUsers').addClass('active')
+        </script>
+    </x-slot>
+
 </x-layouts.app>

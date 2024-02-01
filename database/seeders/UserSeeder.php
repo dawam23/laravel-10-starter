@@ -32,13 +32,5 @@ class UserSeeder extends Seeder
             'email' => 'user@user.com',
             'password' => Hash::make('12345678')
         ]);
-
-        $superAdmin->assignRole('super admin');
-        $admin->assignRole('admin');
-        $user->assignRole('user');
-
-        $userFactory = User::factory(20)->create();
-        $role = Role::findByName('user');
-        $role->users()->attach($userFactory);
     }
 }

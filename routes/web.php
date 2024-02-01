@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +20,11 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-Route::middleware(['auth', 'verified'])->group( function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard',function (User $user) {
+        $users = $user->all();
+        return view('dashboard', compact('users'));
+    })->name('dashboard');
     Route::get('/', function () { return redirect()->route('dashboard'); });
 });
 

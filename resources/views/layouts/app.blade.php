@@ -66,10 +66,10 @@
 
         {{--  datatables custom css  --}}
         <script>
-            $('div.dataTables_length').addClass('ps-4');
-            $('#usersTable_filter').addClass('pe-4');
-            $('div.dataTables_info').addClass('ps-4');
-            $('#usersTable_paginate').addClass('pe-4');
+            $('div.dataTables_length').addClass('ps-lg-4');
+            $('div.dataTables_filter').addClass('pe-lg-4');
+            $('div.dataTables_info').addClass('ps-lg-4');
+            $('div.dataTables_paginate').addClass('pe-lg-4');
         </script>
     </body>
 </html>
