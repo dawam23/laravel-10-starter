@@ -56,23 +56,25 @@
                                             <span class="badge badge-outline text-success">{{ Str::title($role->guard_name) }}</span>
                                         </td>
                                         <td class="text-end">
-                                            @if ($role->name != 'Super Admin')
-                                                <span class="dropdown">
-                                                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        @can('update roles')
-                                                            <a class="dropdown-item" href="{{ route('roles.edit', Crypt::encrypt($role->id)) }}">
-                                                                {{ __('Edit') }}
-                                                            </a>
-                                                        @endcan
-                                                        @can('delete roles')
-                                                            <button type="button" class="dropdown-item" data-action="{{ route('roles.destroy', Crypt::encrypt($role->id)) }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#delete-role" >
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        @endcan
-                                                    </div>
-                                                </span>
-                                            @endif
+                                            @canany(['update roles', 'delete roles'])
+                                                @if ($role->name != 'Super Admin')
+                                                    <span class="dropdown">
+                                                        <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            @can('update roles')
+                                                                <a class="dropdown-item" href="{{ route('roles.edit', Crypt::encrypt($role->id)) }}">
+                                                                    {{ __('Edit') }}
+                                                                </a>
+                                                            @endcan
+                                                            @can('delete roles')
+                                                                <button type="button" class="dropdown-item" data-action="{{ route('roles.destroy', Crypt::encrypt($role->id)) }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#delete-role" >
+                                                                    {{ __('Delete') }}
+                                                                </button>
+                                                            @endcan
+                                                        </div>
+                                                    </span>
+                                                @endif
+                                            @endcanany
                                         </td>
                                     </tr>
                                 @endforeach

@@ -64,21 +64,23 @@
                                             @endforeach
                                         </td>
                                         <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    @can('update users')
-                                                        <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
-                                                            {{ __('Edit') }}
-                                                        </a>
-                                                    @endcan
-                                                    @can('delete users')
-                                                        <a class="dropdown-item" href="#" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
-                                                            {{ __('Delete') }}
-                                                        </a>
-                                                    @endcan
-                                                </div>
-                                            </span>
+                                            @canany(['update users', 'delete users'])
+                                                <span class="dropdown">
+                                                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        @can('update users')
+                                                            <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
+                                                                {{ __('Edit') }}
+                                                            </a>
+                                                        @endcan
+                                                        @can('delete users')
+                                                            <a class="dropdown-item" href="#" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                                {{ __('Delete') }}
+                                                            </a>
+                                                        @endcan
+                                                    </div>
+                                                </span>
+                                            @endcanany
                                         </td>
                                     </tr>
                                 @endforeach

@@ -32,13 +32,19 @@
 
                         <div class="card-header">
                             {{ __('Role Permissions') }}
+                            <span class="text text-danger">&nbsp * &nbsp</span>
+                            @error('permission')
+                                <div class="card-subtitle text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="card-body">
                             <div class="row">
 
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="mb-3">
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <div class="mb-5">
                                         <div class="form-label">{{ __('Users Access') }}</div>
                                         <div>
                                             @foreach ($usersPermissions as $permission)
@@ -51,8 +57,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="mb-3">
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <div class="mb-5">
                                         <div class="form-label">{{ __('Roles Access') }}</div>
                                         <div>
                                             @foreach ($rolesPermissions as $permission)
