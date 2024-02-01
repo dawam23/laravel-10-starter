@@ -26,6 +26,14 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:users,email',
             'password' => ['required', 'string', Password::default(), 'confirmed'],
+            'role' => 'required',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        if ($validator->fails()) {
+            session()->flash('error', __('Whoops, Something Went Wrong'));
+        }
     }
 }
