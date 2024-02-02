@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AuthenticatedSessionController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Public routes of authtication
+Route::controller(AuthenticatedSessionController::class)->group(function() {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+});
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::post('/logout', [AuthenticatedSessionController::class, 'logout']);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return User::all();
 });
