@@ -26,10 +26,13 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $id = Route::input('user');
-        $user = Crypt::decrypt($id);
+
+        if (!$this->wantsJson()) {
+            $id = Crypt::decrypt($id);
+        }
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user,
+            'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'confirmed',
         ];
     }

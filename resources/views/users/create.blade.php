@@ -42,9 +42,8 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label class="col-md-3 col-form-label required">{{ __('Email') }}</label>
+                                {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
-                                    {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
 
                                     {!! Form::email('email', old('email'), [
                                         'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
