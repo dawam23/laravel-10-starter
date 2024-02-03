@@ -1,9 +1,10 @@
 <x-layouts.app>
+
     <x-slot name="styles">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     </x-slot>
 
-    {{-- Page header --}}
+    {{--  Page header  --}}
     <x-slot name="title">
         {{ __('Users') }}
     </x-slot>
@@ -12,20 +13,14 @@
         <div class="col-auto ms-auto d-print-none">
             <div class="btn-list">
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 5l0 14" />
-                        <path d="M5 12l14 0" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     {{ __('New user') }}
                 </a>
             </div>
         </div>
     </x-slot>
 
-    {{-- Page content --}}
+    {{--  Page content  --}}
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-12">
@@ -34,7 +29,7 @@
                         <h3 class="card-title">{{ __('Users List') }}</h3>
                     </div>
                     <div class="table-responsive py-4">
-                        <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4"id="usersTable">
+                        <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4" id="usersTable">
                             <thead>
                                 <tr>
                                     <th class="no-sort w-1"></th>
@@ -46,47 +41,40 @@
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                <tr>
-                                    <td>
-                                        <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">
-                                            {{ $user->getInitialsAvatar() }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex py-1 align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="font-weight-medium">{{ $user->name }}</div>
-                                                <div class="text-muted">
-                                                    <a href="#" class="text-reset">{{ $user->email}}</a>
+                                    <tr>
+                                        <td>
+                                            <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">{{ $user->getInitialsAvatar() }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex py-1 align-items-center">
+                                                <div class="flex-fill">
+                                                    <div class="font-weight-medium">{{ $user->name }}</div>
+                                                    <div class="text-muted"><a href="#" class="text-reset">{{ $user->email }}</a></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Lorem, ipsum dolor.</div>
-                                        <div class="text-muted">Lorem.</div>
-                                    </td>
-                                    <td class="text-muted">
-                                        <span class="badge badge-outline text-success">{{ __('User') }}</span>
-                                    </td>
-                                    <td class="text-end">
-                                        <span class="dropdown">
-                                            <button class="btn dropdown-toggle align-text-top"data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
-                                                    {{ __('Edit') }}
-                                                </a>
-                                                <a class="dropdown-item" href="#"
-                                                    data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}"
-                                                    data-name="{{ $user->name }}" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-user">
-                                                    {{ __('Delete') }}
-                                                </a>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td >
+                                            <div>Lorem, ipsum dolor.</div>
+                                            <di
+                                            v class="text-muted">Lorem.</di>
+                                        </td>
+                                        <td class="text-muted" >
+                                            <span class="badge badge-outline text-success">{{ __('User') }}</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="dropdown">
+                                                <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
+                                                        {{ __('Edit') }}
+                                                    </a>
+                                                    <button type="button" class="dropdown-item" data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#delete-user" >
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -96,7 +84,7 @@
         </div>
     </div>
 
-    {{-- delete user modal --}}
+    {{--  delete user modal  --}}
     <div class="modal modal-blur fade" id="delete-user" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <form action="" method="POST">
@@ -106,9 +94,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-status bg-danger"></div>
                     <div class="modal-body text-center py-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
-                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M12 9v2m0 4v.01" />
                             <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
@@ -150,9 +136,12 @@
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $('#navUsers').addClass('active')
+            $('#liBlank').addClass('active')
+
             $('#usersTable').dataTable( {
-                    // set index of column to set default ordering
+                    // set index of column for default ordering
                     order: [[1, 'asc']],
+
                     //defind class for non-sortable column
                     "columnDefs": [ {
                         "targets": 'no-sort',
@@ -162,9 +151,9 @@
         </script>
         <script>
             $('#delete-user').on('show.bs.modal', function (event) {
-                var a = $(event.relatedTarget);
-                var action = a.data('action');
-                var name = a.data('name');
+                var button = $(event.relatedTarget);
+                var action = button.data('action');
+                var name = button.data('name');
                 var modal = $(this);
                 modal.find('form').attr('action', action);
                 $('#user-name').text(name)
@@ -172,3 +161,4 @@
         </script>
     </x-slot>
 </x-layouts.app>
+

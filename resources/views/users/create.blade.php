@@ -10,17 +10,16 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
-                                {!! Form::label('avatar', __('Profile Picture'), ['class' => 'col-md-3 col-form-label'])
-                                !!}
+                                {!! Form::label('avatar', __('Profile Picture'), ['class' => 'col-md-3 col-form-label']) !!}
                                 <div class="col-md-7">
 
                                     {!! Form::file('avatar', [
-                                    'class' => 'form-control' . ( $errors->has('avatar') ? ' is-invalid' : '' ),
-                                    'accept' => '.png,.jpg,.jpeg,.gif,.webp'
+                                        'class' => 'form-control' . ( $errors->has('avatar') ? ' is-invalid' : '' ),
+                                        'accept' => '.png,.jpg,.jpeg,.gif,.webp'
                                     ]) !!}
 
                                     @error('avatar')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -30,31 +29,30 @@
                                 <div class="col-md-7">
 
                                     {!! Form::text('name', old('name'), [
-                                    'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
-                                    'placeholder' => __('Full name'),
-                                    'required',
-                                    'autofocus'
+                                        'class' => 'form-control' . ( $errors->has('name') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Full name'),
+                                        'required',
+                                        'autofocus'
                                     ]) !!}
 
                                     @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
-                                {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required'])
-                                !!}
+                                {!! Form::label('email', __('Email'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
 
                                     {!! Form::email('email', old('email'), [
-                                    'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
-                                    'placeholder' => __('Email Address'),
-                                    'required'
+                                        'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Email Address'),
+                                        'required'
                                     ]) !!}
 
                                     @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -64,42 +62,39 @@
                                 <div class="col-lg-3 col-md-7">
 
                                     {!! Form::password('password', [
-                                    'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : '' ),
-                                    'placeholder' => __('New password'),
-                                    'required'
+                                        'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('New password'),
+                                        'required'
                                     ]) !!}
 
                                     @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div><!-- /.form-group -->
 
                             <div class="form-group row mb-3">
                                 {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
 
                                     {!! Form::password('password_confirmation', [
-                                    'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
-                                    'placeholder' => __('Confirm password'),
-                                    'required'
+                                        'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
+                                        'placeholder' => __('Confirm password'),
+                                        'required'
                                     ]) !!}
 
                                     @error('password_confirmation')
-                                    <div class="invalid-feedback"></div>
+                                        <div class="invalid-feedback"></div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div><!-- /.form-group -->
 
-                        </div>
+                        </div><!-- /.card-body -->
                         <div class="card-footer">
                             <div class="row justify-content-between">
                                 <div class="col">
                                     <a href="{{ route('users.index') }}" class="btn btn-secondary float-left">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                             <line x1="5" y1="12" x2="11" y2="18"></line>
@@ -111,13 +106,9 @@
 
                                 <div class="col text-end">
                                     <button type="submit" class="btn btn-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2">
-                                            </path>
+                                            <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
                                             <circle cx="12" cy="14" r="2"></circle>
                                             <polyline points="14 4 14 8 8 8 8 4"></polyline>
                                         </svg>
@@ -125,8 +116,8 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div><!-- /.card-footer -->
+                    </div><!-- /.card -->
                 </form>
             </div>
         </div>

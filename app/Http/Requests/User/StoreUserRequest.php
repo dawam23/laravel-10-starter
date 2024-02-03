@@ -22,17 +22,11 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:users,email',
             'password' => ['required', 'string', Password::default(), 'confirmed'],
         ];
-
-        if ($this->wantsJson()) {
-            $rules['password'] = ['required', 'string', Password::default()];
-        }
-
-        return $rules;
     }
 
     public function withValidator($validator)
