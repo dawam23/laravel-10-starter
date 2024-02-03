@@ -50,8 +50,8 @@
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>
-                                        <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">{{
-                                            $user->getInitialsAvatar() }}
+                                        <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">
+                                            {{ $user->getInitialsAvatar() }}
                                         </span>
                                     </td>
                                     <td>
