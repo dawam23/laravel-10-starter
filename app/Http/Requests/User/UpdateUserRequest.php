@@ -32,7 +32,7 @@ class UpdateUserRequest extends FormRequest
         }
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'confirmed',
         ];
     }
@@ -43,5 +43,4 @@ class UpdateUserRequest extends FormRequest
             session()->flash('error', __('Whoops, Something Went Wrong'));
         }
     }
-
 }
