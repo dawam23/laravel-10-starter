@@ -117,6 +117,6 @@ class UsersController extends ApiController
 
         $user->delete();
 
-        return $this->sendResponse([], __('User has been successfully deleted.'));
+        return $this->sendResponse(__('Deleted'), __('User has been successfully deleted.'));
     }
 }

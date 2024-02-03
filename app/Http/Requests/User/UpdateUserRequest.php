@@ -30,11 +30,14 @@ class UpdateUserRequest extends FormRequest
         if (!$this->wantsJson()) {
             $id = Crypt::decrypt($id);
         }
-        return [
+
+        $rules = [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'confirmed',
         ];
+
+        return $rules;
     }
 
     public function withValidator($validator)
@@ -43,5 +46,4 @@ class UpdateUserRequest extends FormRequest
             session()->flash('error', __('Whoops, Something Went Wrong'));
         }
     }
-
 }
