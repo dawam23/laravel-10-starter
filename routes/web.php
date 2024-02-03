@@ -30,11 +30,10 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('users', UsersController::class);
+    Route::resource('users', UsersController::class)->except('show');
     Route::get('/user/{user}/delete-avatar', [UsersController::class, 'deleteAvatar'])->name('users.delete-avatar');
 
     Route::resource('roles', RolesController::class);
 });
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
