@@ -53,6 +53,8 @@ class UsersController extends ApiController
             'password' => Hash::make($input['password']),
         ]);
 
+        $user->assignRole($input['role']);
+
         return $this->sendResponse(new UserResource($user), __('New user added successfully.'));
     }
 
@@ -100,6 +102,7 @@ class UsersController extends ApiController
         }
 
         $user->update($input);
+        $user->syncRoles($request->input('role'));
 
         return $this->sendResponse(new UserResource($user), __('User update successfully.'));
     }
@@ -117,6 +120,6 @@ class UsersController extends ApiController
 
         $user->delete();
 
-        return $this->sendResponse([], __('User has been successfully deleted.'));
+        return $this->sendResponse(__('Deleted'), __('User has been successfully deleted.'));
     }
 }

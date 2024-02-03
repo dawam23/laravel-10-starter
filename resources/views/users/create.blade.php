@@ -75,8 +75,7 @@
                             </div>
 
                             <div class="form-group row mb-3">
-                                {!! Form::label('password', __('Password'), ['class' => 'col-md-3 col-form-label
-                                required']) !!}
+                                {!! Form::label('password', __('Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
 
                                     {!! Form::password('password', [
@@ -92,13 +91,11 @@
                             </div>
 
                             <div class="form-group row mb-3">
-                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3
-                                col-form-label required']) !!}
+                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
 
                                     {!! Form::password('password_confirmation', [
-                                    'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid'
-                                    : '' ),
+                                    'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
                                     'placeholder' => __('Confirm password'),
                                     'required'
                                     ]) !!}

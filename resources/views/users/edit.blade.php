@@ -3,8 +3,7 @@
         <div class="row">
             <x-alerts.alerts />
             <div class="col">
-                <form action="{{ route('users.update', Crypt::encrypt($user->id)) }}" method="post"
-                    enctype="multipart/form-data">
+                <form action="{{ route('users.update', Crypt::encrypt($user->id)) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="card">
@@ -33,8 +32,7 @@
                                             {{ __('Uploading new picture will delete the old one automatically.') }}
                                         </em>
                                     </div>
-                                    <span class="avatar avatar-xl"
-                                        style="background-image: url({{ (new App\Actions\UserAvatar)->get($user) }})"></span>
+                                    <span class="avatar avatar-xl" style="background-image: url({{ (new App\Actions\UserAvatar)->get($user) }})"></span>
                                     <div class="text-danger mt-1">
                                         <a href="{{ route('users.delete-avatar', $user) }}" class="btn btn-danger">
                                             {{ __('Delete Profile Picture') }}
@@ -82,8 +80,7 @@
                                 {!! Form::label('role', __('Role'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-md-7">
 
-                                    {!! Form::select('role', $rolesList, old('role', $user->getRoleNames() != '[]' ?
-                                    $user->getRoleNames() : ''), [
+                                    {!! Form::select('role', $rolesList, old('role', $user->getRoleNames() != '[]' ? $user->getRoleNames() : ''), [
                                     'class' => 'form-select' . ( $errors->has('role') ? ' is-invalid' : '' ),
                                     'id' => 'select-role'
                                     ]) !!}
@@ -110,13 +107,12 @@
                             </div>
 
                             <div class="form-group row mb-3">
-                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3
-                                col-form-label']) !!}
+                                {!! Form::label('password_confirmation', __('Confirm Password'), ['class' => 'col-md-3 col-form-label'])
+                                !!}
                                 <div class="col-md-3">
 
                                     {!! Form::password('password_confirmation', [
-                                    'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid'
-                                    : '' ),
+                                    'class' => 'form-control' . ( $errors->has('password_confirmation') ? ' is-invalid' : '' ),
                                     'placeholder' => __('Confirm password'),
                                     ]) !!}
 

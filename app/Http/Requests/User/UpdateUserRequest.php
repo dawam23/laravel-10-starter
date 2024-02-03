@@ -29,13 +29,16 @@ class UpdateUserRequest extends FormRequest
 
         if (!$this->wantsJson()) {
             $id = Crypt::decrypt($id);
+            $rules['role'] = 'required';
         }
-        return [
+
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'confirmed',
-            'role' => 'required'
         ];
+
+        return $rules;
     }
 
     public function withValidator($validator)
