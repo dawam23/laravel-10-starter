@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes of authtication
-Route::controller(AuthenticatedSessionController::class)->group(function() {
+Route::controller(AuthenticatedSessionController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 });
 
-Route::middleware('auth:sanctum')->group( function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'logout']);
 
     Route::resource('users', UsersController::class)->except(['create', 'edit']);

@@ -37,5 +37,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{user}/delete-avatar', [UsersController::class, 'deleteAvatar'])->name('users.delete-avatar');
 });
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';

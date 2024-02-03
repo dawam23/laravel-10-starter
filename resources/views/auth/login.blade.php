@@ -14,8 +14,17 @@
             <h2 class="card-title text-center mb-4">{{ __('Login to your account') }}</h2>
 
             <div class="mb-3">
-                <label class="form-label">{{ __('Email address') }}</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Enter email') }}" required autofocus tabindex="1">
+
+                {!! Form::label('email', __('Email address'), ['class' => 'form-label']) !!}
+
+                {!! Form::email('email', old('email'), [
+                'class' => 'form-control' . ( $errors->has('email') ? ' is-invalid' : '' ),
+                'placeholder' => __('Enter email'),
+                'required',
+                'autofocus',
+                'tabindex' => '1'
+                ]) !!}
+
                 @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -30,7 +39,14 @@
                     </span>
                     @endif
                 </label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('Password') }}" required tabindex="2">
+
+                {!! Form::password('password', [
+                'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : '' ),
+                'placeholder' => __('Password'),
+                'required',
+                'tabindex' => '2'
+                ]) !!}
+
                 @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -43,6 +59,13 @@
                 </label>
             </div>
 
+            <div>
+                {!! htmlFormSnippet() !!}
+                @error('g-recaptcha-response')
+                <div class="text text-danger">{{ __('Google recaptcha is required') }}</div>
+                @enderror
+            </div>
+
             <div class="form-footer">
                 <button type="submit" class="btn btn-primary w-100" tabindex="4">{{ __('Sign in') }}</button>
             </div>
@@ -51,7 +74,8 @@
 
     @if (Route::has('register'))
     <div class="text-center text-muted mt-3">
-        {{ __("Don't have account yet?") }} <a href="{{ route('register') }}" tabindex="-1">{{ __('Sign up') }}</a>
+        {{ __("Don't have account yet?") }}
+        <a href="{{ route('register') }}" tabindex="-1">{{ __('Sign up') }}</a>
     </div>
     @endif
 </div>

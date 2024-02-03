@@ -57,7 +57,6 @@
     </div>
 
 
-
     <x-slot name="scripts">
     </x-slot>
 </x-layouts.app>
