@@ -12,6 +12,8 @@
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+        {!! htmlScriptTagJsApi() !!}
+
         @stack('styles')
 
         <style>
