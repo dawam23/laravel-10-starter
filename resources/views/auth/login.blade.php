@@ -7,7 +7,7 @@
             <img src="{{ asset('logo.svg') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
         </a>
     </div>
-    <form class="card card-md" action="{{ route('login') }}" method="post" autocomplete="off">
+    <form class="card card-md" id="{{ getFormId() }}" action="{{ route('login') }}" method="post" autocomplete="off">
         @csrf
 
         <div class="card-body">
@@ -60,14 +60,17 @@
             </div>
 
             <div>
-                {!! htmlFormSnippet() !!}
                 @error('g-recaptcha-response')
                 <div class="text text-danger">{{ __('Google recaptcha is required') }}</div>
                 @enderror
             </div>
 
             <div class="form-footer">
-                <button type="submit" class="btn btn-primary w-100" tabindex="4">{{ __('Sign in') }}</button>
+                {!! htmlFormButton(__('Sign in'), [
+                    'class' => 'btn btn-primary w-100',
+                    'tabindex' => '4',
+                    'data-size' => 'invisible'
+                ]) !!}
             </div>
         </div>
     </form>
