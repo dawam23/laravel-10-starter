@@ -59,21 +59,6 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                {!! Form::label('role', __('Role'), ['class' => 'col-md-3 col-form-label required']) !!}
-                                <div class="col-md-7">
-
-                                    {!! Form::select('role', $rolesList, old('role'), [
-                                    'class' => 'form-select' . ( $errors->has('role') ? ' is-invalid' : '' ),
-                                    'id' => 'select-role'
-                                    ]) !!}
-
-                                    @error('role')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
                             <div class="form-group row mb-3">
                                 {!! Form::label('password', __('Password'), ['class' => 'col-md-3 col-form-label required']) !!}
                                 <div class="col-lg-3 col-md-7">
