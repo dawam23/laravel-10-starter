@@ -10,18 +10,36 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('name')
-            ->get();
+        if ($request->ajax()) {
 
-        return view('users.index', compact('users'));
+            $users = User::orderBy('name')
+                ->get();
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->addColumn('avatar', function($user){
+                    return '<span class="avatar me-2" style="background-image: url(' . $user->getAvatarUrl() . ')">
+                                ' . $user->getInitialsAvatar() . '
+                            </span>';
+                })
+                ->addColumn('role', 'role')
+                ->addColumn('action', function ($user) {
+                    return view('users.partials.button-action', compact('user'));
+                })
+                ->rawColumns(['action', 'avatar', 'role'])
+                ->make(true);
+        }
+
+        return view('users.index');
     }
 
     /**
