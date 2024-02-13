@@ -27,6 +27,8 @@ class PermissionSeeder extends Seeder
             'read roles',
             'update roles',
             'delete roles',
+
+            'stats dashboard'
         ];
         foreach ($data as $permission) {
             Permission::create(['name' => $permission]);

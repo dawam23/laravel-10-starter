@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -14,14 +15,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('stats dashboard')) {
+            return view('dashboard');
+        }
+
         $users = User::orderBy('name')
-                    ->get();
+            ->get();
 
         $permissions = Permission::orderBy('name')
-                    ->get();
+            ->get();
 
         $roles = Role::orderBy('name')
-                    ->get();
+            ->get();
 
         return view('dashboard', compact(['users', 'permissions', 'roles']));
     }

@@ -91,12 +91,16 @@ class RolesController extends Controller
                                 ->where('name', 'like', '%roles')
                                 ->get();
 
+        $dashboardPermissions = Permission::orderBy('name')
+                                ->where('name', 'like', '%dashboard')
+                                ->get();
+
         $rolePermissions = DB::table('role_has_permissions')
                             ->where('role_has_permissions.role_id', $id)
                             ->pluck('role_has_permissions.permission_id')
                             ->all();
 
-        return view('roles.edit', compact('role', 'usersPermissions', 'rolesPermissions', 'rolePermissions'));
+        return view('roles.edit', compact('role', 'usersPermissions', 'rolesPermissions', 'rolePermissions', 'dashboardPermissions'));
     }
 
     /**

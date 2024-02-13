@@ -72,6 +72,20 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <div class="mb-5">
+                                        <div class="form-label">{{ __('Dashboard Access') }}</div>
+                                        <div>
+                                            @foreach ($dashboardPermissions as $permission)
+                                                <label class="form-check">
+                                                    {!! Form::checkbox('permission[]', $permission->name, in_array($permission->id, $rolePermissions), ['class' => 'form-check-input']) !!}
+                                                    <span class="form-check-label">{{ Str::title($permission->name) }}</span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
