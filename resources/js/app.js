@@ -1,4 +1,4 @@
 import './bootstrap';
-import '@tabler/core/dist/js/tabler.min.js';
-import '@tabler/core/dist/js/demo.min.js';
 
+import '@tabler/core/dist/js/tabler.js';
+import '@tabler/core/dist/js/demo.js';

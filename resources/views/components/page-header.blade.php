@@ -2,7 +2,7 @@
     @if (!empty($pretitle) OR !empty($title) OR !empty($actions) OR !empty($subtitle))
         <div class="container-xl">
             <!-- Page title -->
-            <div class="page-header d-print-none d-none d-md-block">
+            <div class="page-header d-print-none">
                 <div class="row align-items-center">
                     <div class="col">
                         @if (! empty($pretitle))
