@@ -55,7 +55,7 @@
                 ]) !!}
 
                 {!! Form::password('password', [
-                'class' => 'form-control' . ( $errors->has('password' ? ' is-invalid' : '')),
+                'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : ''),
                 'placeholder' => __('Password'),
                 'required',
                 'autocomplete' => 'new-password'
