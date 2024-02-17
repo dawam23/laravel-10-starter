@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-        <title>@yield('title')</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+    <link rel="shortcut icon" href="{{ asset('favicon.svg') }}">
 
-            .full-height {
-                height: 100vh;
-            }
+    <title>@yield('title')</title>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-            .position-ref {
-                position: relative;
-            }
+    <style>
+        @import url('https://rsms.me/inter/inter.css');
 
-            .content {
-                text-align: center;
-            }
+        :root {
+            --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+        }
 
-            .title {
-                font-size: 36px;
-                padding: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title">
-                    @yield('message')
-                </div>
+        body {
+            font-feature-settings: "cv03", "cv04", "cv11";
+        }
+    </style>
+</head>
+
+<body class=" border-top-wide border-primary d-flex flex-column">
+    <script src="{{ asset('js/initTheme.min.js') }}"></script>
+    <div class="page page-center">
+        <div class="empty">
+            <div class="empty-header">
+                @yield('code')
+            </div>
+            <p class="empty-title">@yield('message')</p>
+            <p class="empty-subtitle text-muted">
+                @yield('sub message')
+            </p>
+            <div class="empty-action">
+                <a href="./." class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l14 0" />
+                        <path d="M5 12l6 6" />
+                        <path d="M5 12l6 -6" />
+                    </svg>
+                    {{ __('Take me home') }}
+                </a>
             </div>
         </div>
-    </body>
+    </div>
+    <!-- Libs JS -->
+    @stack('scripts')
+</body>
+
 </html>

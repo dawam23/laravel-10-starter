@@ -48,6 +48,22 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
+            <div class="mb-3">
+                {!! Form::label('role', __('Role'), [
+                'class' => 'form-label required'
+                ]) !!}
+
+                {!! Form::select('role', $rolesList, old('role'), [
+                'class' => 'form-select' . ( $errors->has('role') ? ' is-invalid' : '' ),
+                'id' => 'select-role'
+                ]) !!}
+
+                @error('role')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="mb-3">
 
                 {!! Form::label('password', __('Password'), [
@@ -55,7 +71,7 @@
                 ]) !!}
 
                 {!! Form::password('password', [
-                'class' => 'form-control' . ( $errors->has('password' ? ' is-invalid' : '')),
+                'class' => 'form-control' . ( $errors->has('password') ? ' is-invalid' : ''),
                 'placeholder' => __('Password'),
                 'required',
                 'autocomplete' => 'new-password'
@@ -95,5 +111,36 @@
     </div>
     @endif
 </div>
-
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('select-role'), {
+            copyClassesToDropdown: false,
+            allowEmptyOption: false,
+            dropdownParent: 'body',
+            controlInput: '<input>',
+            render:{
+                item: function(data,escape) {
+                    if( data.customProperties ){
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                },
+                option: function(data,escape){
+                    if( data.customProperties ){
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                },
+            },
+        }));
+    });
+    // @formatter:on
+</script>
+
+@endpush
