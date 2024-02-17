@@ -23,8 +23,16 @@
             <p class="text-muted mb-4">{{ __('Enter your email address and your password will be reset and emailed to you.') }}</p>
 
             <div class="mb-3">
-                <label class="form-label">{{ __('Email address') }}</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control form-control-user @error('email') is-invalid @enderror" placeholder="{{ __('Enter Email Address...') }}">
+
+                {!! Form::label('email', __('Email address'), [
+                'class' => 'form-label required'
+                ]) !!}
+
+                {!! Form::email('email', old('email'), [
+                'class' => 'form-control form-control-user' . ( $errors->has('email') ? ' is-invalid' : '' ),
+                'placeholder' => __('Enter Email Address...')
+                ]) !!}
+
                 @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
