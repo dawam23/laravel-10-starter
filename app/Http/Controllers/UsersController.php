@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
@@ -30,12 +31,57 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('name')
-            ->get();
+        if ($request->ajax()) {
 
-        return view('users.index', compact('users'));
+            $users = User::orderBy('name')
+                ->get();
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->addColumn('avatar', function($user){
+                    return '<span class="avatar me-2" style="background-image: url(' . $user->getAvatarUrl() . ')">
+                                ' . $user->getInitialsAvatar() . '
+                            </span>';
+                })
+                ->addColumn('name', function($user){
+                    return '<div class="d-flex py-1 align-items-center">
+                                <div class="flex-fill">
+                                    <div class="font-weight-medium">' . $user->name . '</div>
+                                    <div class="text-muted">
+                                        <a href="#" class="text-reset">' . $user->email .'</a>
+                                    </div>
+                                </div>
+                            </div>';
+                })
+                ->addColumn('role', function ($user) {
+                    foreach ($user->roles->pluck('name') as $roles) {
+                        return '<span class="badge badge-outline text-success">' . $roles . '</span>';
+                    }
+                })
+                ->addColumn('action', function ($user) {
+                    return '<div class="dropdown">
+                                <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">Action</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="' . route('users.edit', Crypt::encrypt($user->id)) . '">
+                                        ' . __('Edit') . '
+                                    </a>
+                                    <a class="dropdown-item" href="#"
+                                        data-action="' . route('users.destroy', Crypt::encrypt($user->id)) . '"
+                                        data-name="{{ $user->name }}" data-bs-toggle="modal"
+                                        data-bs-target="#delete-user">
+                                        ' . __('Delete') . '
+                                    </a>
+                                </div>
+                            </div>';
+                })
+                ->rawColumns(['name', 'avatar', 'role', 'action'])
+                ->make(true);
+        }
+
+        return view('users.index');
     }
 
     /**

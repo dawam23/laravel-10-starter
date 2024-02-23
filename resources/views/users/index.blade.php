@@ -48,65 +48,13 @@
                         <table class="table card-table table-vcenter text-nowrap table-striped datatable py-4" id="usersTable">
                             <thead>
                                 <tr>
-                                    <th class="no-sort w-1"></th>
+                                    <th class="w-1"></th>
                                     <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Title') }}</th>
                                     <th>{{ __('Role') }}</th>
-                                    <th class="no-sort w-1"></th>
+                                    <th class="w-1"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
-                                <tr>
-                                    <td>
-                                        <span class="avatar me-2" style="background-image: url({{ $user->getAvatarUrl() }})">
-                                            {{ $user->getInitialsAvatar() }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex py-1 align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="font-weight-medium">{{ $user->name }}</div>
-                                                <div class="text-muted">
-                                                    <a href="#" class="text-reset">{{ $user->email}}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Lorem, ipsum dolor.</div>
-                                        <div class="text-muted">Lorem.</div>
-                                    </td>
-                                    <td class="text-muted">
-                                        @foreach ($user->roles->pluck('name') as $roles)
-                                        <span class="badge badge-outline text-success">{{ Str::title($roles) }}</span>
-                                        @endforeach
-                                    </td>
-                                    <td class="text-end">
-                                        @canany(['update users', 'delete users'])
-                                        <div class="dropdown">
-                                            <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">Actions</a>
-                                            <div class="dropdown-menu">
-                                                @can('update users')
-                                                <a class="dropdown-item"
-                                                    href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
-                                                    {{ __('Edit') }}
-                                                </a>
-                                                @endcan
-                                                @can('delete users')
-                                                <a class="dropdown-item" href="#"
-                                                    data-action="{{ route('users.destroy', Crypt::encrypt($user->id)) }}"
-                                                    data-name="{{ $user->name }}" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-user">
-                                                    {{ __('Delete') }}
-                                                </a>
-                                                @endcan
-                                            </div>
-                                        </div>
-                                        @endcanany
-                                    </td>
-                                </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
